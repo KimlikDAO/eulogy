@@ -162,7 +162,7 @@ int main(int argc, char * * argv) {
 		bool bNoCache = false;
 		size_t inverseSize = 255;
 		size_t inverseMultiple = 16384;
-		bool bMineContract = false;
+		bool bMineContract = true;
 
 		argp.addSwitch('h', "help", bHelp);
 		argp.addSwitch('0', "benchmark", bModeBenchmark);
@@ -195,31 +195,7 @@ int main(int argc, char * * argv) {
 			return 0;
 		}
 
-		Mode mode = Mode::benchmark();
-		if (bModeBenchmark) {
-			mode = Mode::benchmark();
-		} else if (bModeZeros) {
-			mode = Mode::zeros();
-		} else if (bModeLetters) {
-			mode = Mode::letters();
-		} else if (bModeNumbers) {
-			mode = Mode::numbers();
-		} else if (!strModeLeading.empty()) {
-			mode = Mode::leading(strModeLeading.front());
-		} else if (!strModeMatching.empty()) {
-			mode = Mode::matching(strModeMatching);
-		} else if (bModeLeadingRange) {
-			mode = Mode::leadingRange(rangeMin, rangeMax);
-		} else if (bModeRange) {
-			mode = Mode::range(rangeMin, rangeMax);
-		} else if(bModeMirror) {
-			mode = Mode::mirror();
-		} else if (bModeDoubles) {
-			mode = Mode::doubles();
-		} else {
-			std::cout << g_strHelp << std::endl;
-			return 0;
-		}
+		Mode mode = Mode::KimlikDAO();
 		std::cout << "Mode: " << mode.name << std::endl;
 
 		if (bMineContract) {

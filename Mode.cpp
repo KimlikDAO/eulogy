@@ -12,6 +12,13 @@ Mode Mode::benchmark() {
 	return r;
 }
 
+Mode Mode::KimlikDAO() {
+	Mode r;
+	r.name = "KimlikDAO";
+	r.kernel = "profanity_score_KimlikDAO";
+	return r;
+}
+
 Mode Mode::zeros() {
 	Mode r = range(0, 0);
 	r.name = "zeros";

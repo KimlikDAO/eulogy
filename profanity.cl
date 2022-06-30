@@ -710,19 +710,27 @@ __kernel void profanity_score_benchmark(__global mp_number * const pInverse, __g
 	profanity_result_update(id, hash, pResult, score, scoreMax);
 }
 
-__kernel void profanity_score_matching(__global mp_number * const pInverse, __global result * const pResult, __constant const uchar * const data1, __constant const uchar * const data2, const uchar scoreMax) {
+__kernel void profanity_score_KimlikDAO(__global mp_number * const pInverse, __global result * const pResult, __constant const uchar * const data1, __constant const uchar * const data2, const uchar scoreMax) {
 	const size_t id = get_global_id(0);
 	__global const uchar * const hash = pInverse[id].d;
-	int score = 0;
 
-	for (int i = 0; i < 20; ++i) {
-		if (data1[i] > 0 && (hash[i] & data1[i]) == data2[i]) {
-			++score;
-		}
-	}
-
-	profanity_result_update(id, hash, pResult, score, scoreMax);
+	if (hash[0] == 204 && hash[1] == 192 && hash[19] == 204 && ((hash[18] & 15) == 12))
+		profanity_result_update(id, hash, pResult, scoreMax + 1, scoreMax);
 }
+
+ __kernel void profanity_score_matching(__global mp_number * const pInverse, __global result * const pResult, __constant const uchar * const data1, __constant const uchar * const data2, const uchar scoreMax) {
+        const size_t id = get_global_id(0);
+        __global const uchar * const hash = pInverse[id].d;
+        int score = 0;
+ 
+        for (int i = 0; i < 20; ++i) {
+                if (data1[i] > 0 && (hash[i] & data1[i]) == data2[i]) {
+                        ++score;
+                }
+        }
+ 
+        profanity_result_update(id, hash, pResult, score, scoreMax);
+ }
 
 __kernel void profanity_score_leading(__global mp_number * const pInverse, __global result * const pResult, __constant const uchar * const data1, __constant const uchar * const data2, const uchar scoreMax) {
 	const size_t id = get_global_id(0);
