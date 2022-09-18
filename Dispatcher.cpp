@@ -90,26 +90,14 @@ cl_kernel Dispatcher::Device::createKernel(cl_program & clProgram, const std::st
 }
 
 cl_ulong4 Dispatcher::Device::createSeed() {
-#ifdef PROFANITY_DEBUG
+	std::random_device rd("/dev/random");
 	cl_ulong4 r;
-	r.s[0] = 1;
-	r.s[1] = 1;
-	r.s[2] = 1;
-	r.s[3] = 1;
+	r.s[0] = (((uint64_t) rd()) << 32) | rd();
+	r.s[1] = (((uint64_t) rd()) << 32) | rd();
+	r.s[2] = (((uint64_t) rd()) << 32) | rd();
+	r.s[3] = (((uint64_t) rd()) << 32) | rd();
+	printf("Şu rastgele sayılar kullanılıyor: %llx, %llx, %llx, %llx\n", r.s[0], r.s[1], r.s[2], r.s[3]);
 	return r;
-#else
-	// Randomize private keys
-	std::random_device rd;
-	std::mt19937_64 eng(rd());
-	std::uniform_int_distribution<cl_ulong> distr;
-
-	cl_ulong4 r;
-	r.s[0] = distr(eng);
-	r.s[1] = distr(eng);
-	r.s[2] = distr(eng);
-	r.s[3] = distr(eng);
-	return r;
-#endif
 }
 
 Dispatcher::Device::Device(Dispatcher & parent, cl_context & clContext, cl_program & clProgram, cl_device_id clDeviceId, const size_t worksizeLocal, const size_t size, const size_t index, const Mode & mode) :
