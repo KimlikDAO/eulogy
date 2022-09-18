@@ -1,6 +1,6 @@
-# Makefile artifacts
+.vscode
 *.o
 *.so
-cache-opencl.*
 bin
+cache-opencl.*
 profanity

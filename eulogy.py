@@ -12,14 +12,18 @@ def contract_address(sender: str, nonce=0) -> str:
     address_bytes = h[12:]
     return to_checksum_address(address_bytes)
 
+Count = 0
+
 def f(priv):
+    global Count
     acc = Account.from_key(priv)
     deployer = acc.address
     deployed = contract_address(acc.address)
+    Count += 1
     if deployed.startswith("0xcCc") and deployed.endswith("cCc"):
-        print("Found: ", priv, deployer, deployed)
+        print(f"C: {Count}  Hit: {deployed} {priv} {deployer}")
     else:
-        print("Missed:", priv, deployer, deployed)
+        print(f"C: {Count} Miss: {deployed} {priv} {deployer}")
 
 
 started = False
