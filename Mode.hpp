@@ -12,6 +12,7 @@
 enum HashTarget {
 	ADDRESS,
 	CONTRACT,
+	ZKSYNC_ERA_CONTRACT,
 	HASH_TARGET_COUNT
 };
 
@@ -32,6 +33,7 @@ class Mode {
 		static Mode numbers();
 		static Mode doubles();
 		static Mode KimlikDAO();
+		static Mode DobbyInu();
 
 		std::string name;
 

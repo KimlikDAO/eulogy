@@ -676,6 +676,37 @@ void profanity_result_update(const size_t id, __global const uchar * const hash,
 	}
 }
 
+__kernel void profanity_transform_zksyncera_contract(__global mp_number *const pInverse) {
+  const size_t id = get_global_id(0);
+  __global const uchar *const hash = pInverse[id].d;
+
+  ethhash h;
+  for (int i = 8; i < 50; ++i) {
+    h.d[i] = 0;
+  }
+  // set up keccak(CreatePrefix, address, nonce)
+  h.d[0] = 2850273891;
+  h.d[1] = 3895991701;
+  h.d[2] = 3082288035;
+  h.d[3] = 3249473801;
+  h.d[4] = 4228908576;
+  h.d[5] = 3730490715;
+  h.d[6] = 1501638436;
+  h.d[7] = 592406388;
+  for (int i = 0; i < 20; i++) {
+    h.b[i + 32 + 12] = hash[i];
+  }
+
+  h.b[96] ^= 0x01; // length 96
+  sha3_keccakf(&h);
+
+  pInverse[id].d[0] = h.d[3];
+  pInverse[id].d[1] = h.d[4];
+  pInverse[id].d[2] = h.d[5];
+  pInverse[id].d[3] = h.d[6];
+  pInverse[id].d[4] = h.d[7];
+}
+
 __kernel void profanity_transform_contract(__global mp_number * const pInverse) {
 	const size_t id = get_global_id(0);
 	__global const uchar * const hash = pInverse[id].d;
@@ -715,6 +746,14 @@ __kernel void profanity_score_KimlikDAO(__global mp_number * const pInverse, __g
 	__global const uchar * const hash = pInverse[id].d;
 
 	if (hash[0] == 204 && hash[1] == 192 && hash[19] == 204 && ((hash[18] & 15) == 12))
+		profanity_result_update(id, hash, pResult, scoreMax + 1, scoreMax);
+}
+
+__kernel void profanity_score_DobbyInu(__global mp_number * const pInverse, __global result * const pResult, __constant const uchar * const data1, __constant const uchar * const data2, const uchar scoreMax) {
+	const size_t id = get_global_id(0);
+	__global const uchar * const hash = pInverse[id].d;
+
+	if (hash[0] == 208 && hash[1] == 187 && hash[2] == 7 * 16 /* && hash[18] == 208 && hash[19]== 183 */)
 		profanity_result_update(id, hash, pResult, scoreMax + 1, scoreMax);
 }
 

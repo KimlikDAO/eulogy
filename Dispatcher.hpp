@@ -20,7 +20,7 @@
 #include "Mode.hpp"
 
 #define PROFANITY_SPEEDSAMPLES 20
-#define PROFANITY_MAX_SCORE 40
+#define PROFANITY_MAX_SCORE 200
 
 class Dispatcher {
 	private:

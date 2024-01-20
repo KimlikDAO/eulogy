@@ -1,3 +1,16 @@
+# eulogy
+Profanity but with flowers 🌸🌼🌸🌼.
+
+Eulogy differs from profanity in that:
+ - search is seeded with 256-bits of true randomness from `/dev/random`.
+ - zkSync Era contract address computation is supported
+
+```shell
+usage: bun eulogy.js [OPTIONS]
+
+  --contract
+  --zksyncera
+```
 # profanity
 Profanity is a high performance (probably the fastest!) vanity address generator for Ethereum. Create cool customized addresses that you never realized you needed! Recieve Ether in style! Wow!
 

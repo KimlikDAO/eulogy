@@ -19,6 +19,13 @@ Mode Mode::KimlikDAO() {
 	return r;
 }
 
+Mode Mode::DobbyInu() {
+	Mode r;
+	r.name = "DobbyInu";
+	r.kernel = "profanity_score_DobbyInu";
+	return r;
+}
+
 Mode Mode::zeros() {
 	Mode r = range(0, 0);
 	r.name = "zeros";
@@ -109,6 +116,8 @@ std::string Mode::transformKernel() const {
 			return "";
 		case CONTRACT:
 			return "profanity_transform_contract";
+		case ZKSYNC_ERA_CONTRACT:
+		  return "profanity_transform_zksyncera_contract";
 		default:
 			throw "No kernel for target";
 	}
@@ -120,6 +129,8 @@ std::string Mode::transformName() const {
 			return "Address";
 		case CONTRACT:
 			return "Contract";
+		case ZKSYNC_ERA_CONTRACT:
+		  return "zkSync Era Contract";
 		default:
 			throw "No name for target";
 	}
