@@ -1,6 +1,8 @@
 .vscode
+*.lock*
 *.o
 *.so
 bin
 cache-opencl.*
+node_modules/
 profanity

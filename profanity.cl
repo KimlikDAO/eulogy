@@ -745,7 +745,7 @@ __kernel void profanity_score_KimlikDAO(__global mp_number * const pInverse, __g
 	const size_t id = get_global_id(0);
 	__global const uchar * const hash = pInverse[id].d;
 
-	if (hash[0] == 204 && hash[1] == 192 && hash[19] == 204 && ((hash[18] & 15) == 12))
+	if (hash[0] == 29 && hash[1] == 160 && hash[19] == 160 && hash[18] == 29)
 		profanity_result_update(id, hash, pResult, scoreMax + 1, scoreMax);
 }
 

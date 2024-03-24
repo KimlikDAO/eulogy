@@ -1,0 +1,6 @@
+{
+  "dependencies": {},
+  "devDependencies": {
+    "ethers": "^6.11.1"
+  }
+}
